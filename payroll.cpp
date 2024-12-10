@@ -88,6 +88,7 @@ public:
     }
 
     int getCode() { return code; }
+    string getName() { return name; }  // Added getName() function
     void editEmployee();
 };
 
@@ -151,7 +152,7 @@ public:
         cout << "------------------------" << endl;
         
         for (Employee& emp : employees) {
-            cout << setw(5) << emp.getCode() << setw(20) << endl;
+            cout << setw(5) << emp.getCode() << setw(20) << emp.getName() << endl;  // Fixed: Added emp.getName()
         }
     }
 
