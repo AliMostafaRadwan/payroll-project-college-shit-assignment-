@@ -67,53 +67,52 @@ public:
         cout << "Enter Overtime Hours: ";
         cin >> overtimeHours;
 
-        double overtimeRate = 100.0;  // $100 per overtime hour
+        double overtimeRate = 100.0;  // $100 per hour overtime
         double overtimePay = overtimeHours * overtimeRate;
         double grossSalary = basicSalary + houseAllowance + overtimePay;
         double deductions = loan;
         double netSalary = grossSalary - deductions;
 
-        cout << "\n========= SALARY SLIP =========" << endl;
-        cout << "Employee Name: " << name << endl;
+        cout << "\n-------- SALARY SLIP --------" << endl;
+        cout << "Employee Code: " << code << endl;
+        cout << "Name: " << name << endl;
         cout << "Designation: " << designation << endl;
-        cout << "Grade: " << grade << endl;
         cout << "Days Worked: " << daysWorked << endl;
+        cout << "Overtime Hours: " << overtimeHours << endl;
+        cout << "\nEarnings:" << endl;
         cout << "Basic Salary: $" << basicSalary << endl;
         cout << "House Allowance: $" << houseAllowance << endl;
         cout << "Overtime Pay: $" << overtimePay << endl;
         cout << "Gross Salary: $" << grossSalary << endl;
-        cout << "Loan Deduction: $" << deductions << endl;
-        cout << "Net Salary: $" << netSalary << endl;
-        cout << "=============================" << endl;
+        cout << "\nDeductions:" << endl;
+        cout << "Loan: $" << loan << endl;
+        cout << "\nNet Salary: $" << netSalary << endl;
+        cout << "---------------------------" << endl;
     }
 
     int getCode() { return code; }
-    string getName() { return name; }  // Added getName() function
-    void editEmployee();
-};
+    void editEmployee() {
+        cin.ignore();
+        cout << "\nEnter New Name: ";
+        getline(cin, name);
+        cout << "Enter New Address: ";
+        getline(cin, address);
+        cout << "Enter New Phone: ";
+        getline(cin, phone);
+        cout << "Enter New Designation: ";
+        getline(cin, designation);
+        cout << "Enter New Grade (A/B/C/D/E): ";
+        cin >> grade;
+        cout << "Enter New Basic Salary: ";
+        cin >> basicSalary;
+        cout << "Enter New House Allowance: ";
+        cin >> houseAllowance;
+        cout << "Enter New Loan Amount: ";
+        cin >> loan;
+    }
 
-void Employee::editEmployee() {
-    cout << "\nEditing Employee: " << name << endl;
-    cout << "Enter new details:" << endl;
-    
-    cin.ignore();
-    cout << "Enter Name (current: " << name << "): ";
-    getline(cin, name);
-    cout << "Enter Address (current: " << address << "): ";
-    getline(cin, address);
-    cout << "Enter Phone (current: " << phone << "): ";
-    getline(cin, phone);
-    cout << "Enter Designation (current: " << designation << "): ";
-    getline(cin, designation);
-    cout << "Enter Grade (current: " << grade << "): ";
-    cin >> grade;
-    cout << "Enter Basic Salary (current: " << basicSalary << "): ";
-    cin >> basicSalary;
-    cout << "Enter House Allowance (current: " << houseAllowance << "): ";
-    cin >> houseAllowance;
-    cout << "Enter Loan (current: " << loan << "): ";
-    cin >> loan;
-}
+    string getName() { return name; }
+};
 
 class PayrollSystem {
 private:
@@ -124,7 +123,7 @@ public:
         Employee emp;
         emp.addEmployee();
         employees.push_back(emp);
-        cout << "\nEmployee added successfully!" << endl;
+        cout << "\nEmployee Added Successfully!" << endl;
     }
 
     void displayEmployee() {
@@ -138,21 +137,21 @@ public:
                 return;
             }
         }
-        cout << "Employee not found!" << endl;
+        cout << "\nEmployee not found!" << endl;
     }
 
     void listEmployees() {
         if (employees.empty()) {
-            cout << "\nNo employees in the system." << endl;
+            cout << "\nNo employees in the system!" << endl;
             return;
         }
 
         cout << "\nList of All Employees:" << endl;
-        cout << setw(5) << "Code" << setw(20) << "Name" << endl;
-        cout << "------------------------" << endl;
+        cout << setw(10) << "Code" << setw(20) << "Name" << endl;
+        cout << "--------------------------------" << endl;
         
         for (Employee& emp : employees) {
-            cout << setw(5) << emp.getCode() << setw(20) << emp.getName() << endl;  // Fixed: Added emp.getName()
+            cout << setw(10) << emp.getCode() << setw(20) << emp.getName() << endl;
         }
     }
 
@@ -167,7 +166,7 @@ public:
                 return;
             }
         }
-        cout << "Employee not found!" << endl;
+        cout << "\nEmployee not found!" << endl;
     }
 
     void editEmployeeDetails() {
@@ -178,11 +177,11 @@ public:
         for (Employee& emp : employees) {
             if (emp.getCode() == code) {
                 emp.editEmployee();
-                cout << "Employee details updated successfully!" << endl;
+                cout << "\nEmployee Details Updated Successfully!" << endl;
                 return;
             }
         }
-        cout << "Employee not found!" << endl;
+        cout << "\nEmployee not found!" << endl;
     }
 };
 
@@ -191,7 +190,7 @@ int main() {
     int choice;
 
     do {
-        cout << "\n=== Payroll Management System ===" << endl;
+        cout << "\n=== PAYROLL MANAGEMENT SYSTEM ===" << endl;
         cout << "1: NEW EMPLOYEE" << endl;
         cout << "2: DISPLAY EMPLOYEE" << endl;
         cout << "3: LIST OF EMPLOYEES" << endl;
@@ -218,10 +217,10 @@ int main() {
                 payroll.editEmployeeDetails();
                 break;
             case 0:
-                cout << "Thank you for using the system!" << endl;
+                cout << "\nThank you for using the system!" << endl;
                 break;
             default:
-                cout << "Invalid choice! Please try again." << endl;
+                cout << "\nInvalid choice! Please try again." << endl;
         }
     } while (choice != 0);
 
