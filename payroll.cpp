@@ -4,6 +4,12 @@
 #include <iomanip>
 using namespace std;
 
+struct Date {
+    int day;
+    int month;
+    int year;
+};
+
 class Employee {
 private:
     int code;
@@ -15,6 +21,7 @@ private:
     double basicSalary;
     double houseAllowance;
     double loan;
+    Date joiningDate;
     
 public:
     Employee() {
@@ -37,6 +44,8 @@ public:
         getline(cin, phone);
         cout << "Enter Designation: ";
         getline(cin, designation);
+        cout << "Enter Joining Date (DD MM YYYY): ";
+        cin >> joiningDate.day >> joiningDate.month >> joiningDate.year;
         cout << "Enter Grade (A/B/C/D/E): ";
         cin >> grade;
         cout << "Enter Basic Salary: ";
@@ -54,6 +63,8 @@ public:
         cout << "Address: " << address << endl;
         cout << "Phone: " << phone << endl;
         cout << "Designation: " << designation << endl;
+        cout << "Joining Date: " << joiningDate.day << "/" 
+             << joiningDate.month << "/" << joiningDate.year << endl;
         cout << "Grade: " << grade << endl;
         cout << "Basic Salary: $" << basicSalary << endl;
         cout << "House Allowance: $" << houseAllowance << endl;
@@ -101,6 +112,8 @@ public:
         getline(cin, phone);
         cout << "Enter New Designation: ";
         getline(cin, designation);
+        cout << "Enter New Joining Date (DD MM YYYY): ";
+        cin >> joiningDate.day >> joiningDate.month >> joiningDate.year;
         cout << "Enter New Grade (A/B/C/D/E): ";
         cin >> grade;
         cout << "Enter New Basic Salary: ";
@@ -183,6 +196,32 @@ public:
         }
         cout << "\nEmployee not found!" << endl;
     }
+
+    void deleteEmployee() {
+        int code;
+        cout << "\nEnter Employee Code to Delete: ";
+        cin >> code;
+
+        for (auto it = employees.begin(); it != employees.end(); ++it) {
+            if (it->getCode() == code) {
+                cout << "\nEmployee Found. Details:" << endl;
+                it->displayEmployee();
+                
+                char confirm;
+                cout << "\nAre you sure you want to delete this employee? (y/n): ";
+                cin >> confirm;
+                
+                if (confirm == 'y' || confirm == 'Y') {
+                    employees.erase(it);
+                    cout << "\nEmployee Deleted Successfully!" << endl;
+                } else {
+                    cout << "\nDeletion Cancelled!" << endl;
+                }
+                return;
+            }
+        }
+        cout << "\nEmployee not found!" << endl;
+    }
 };
 
 int main() {
@@ -196,6 +235,7 @@ int main() {
         cout << "3: LIST OF EMPLOYEES" << endl;
         cout << "4: SALARY SLIP" << endl;
         cout << "5: EDIT" << endl;
+        cout << "6: DELETE EMPLOYEE" << endl;
         cout << "0: QUIT" << endl;
         cout << "ENTER YOUR CHOICE: ";
         cin >> choice;
@@ -215,6 +255,9 @@ int main() {
                 break;
             case 5:
                 payroll.editEmployeeDetails();
+                break;
+            case 6:
+                payroll.deleteEmployee();
                 break;
             case 0:
                 cout << "\nThank you for using the system!" << endl;
